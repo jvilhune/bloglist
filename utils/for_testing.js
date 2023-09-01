@@ -34,7 +34,63 @@ const average = (array) => {
     : array.reduce(reducer, 0) / array.length
 }
 
+const dummy = (blogs) => {
+  var retval = 1
+  return retval
+}
+
+module.exports = {
+  dummy
+}
+
+
+const phone = (phonenumber) => {
+  var retval = "";
+  var phonenum = phonenumber;
+  var a = 0;
+  var numcount = 0;
+  var hyphencount = 0;
+  var hyphenindex = 0;
+  var notnumnothypencount = 0;
+  var len = phonenum.length;
+
+  for(a=0;a<phonenum.length;a++)
+  {
+    if(phonenum[a] == '-')
+    {
+      hyphencount++;
+      hyphenindex = a;
+    }
+    else if (phonenum[a] >= '0' && phonenum[a] <= '9')
+    {      
+      numcount++;
+    }
+    else
+    {      
+      notnumnothypencount++;
+    }
+  }
+
+  if(len > 7 && notnumnothypencount == 0 && numcount > 6 && hyphencount == 1 && (hyphenindex == 2 || hyphenindex == 3))
+  {
+    /* Phone number is illegal */
+    retval = 1;
+  }
+  else
+  {
+    /* Phone number is legal */
+    retval = 0;
+  }
+  return retval;
+}
+
+
+
+
+
 module.exports = {
   reverse,
   average,
+  phone,
+  dummy
 }
