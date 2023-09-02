@@ -1,3 +1,13 @@
+
+/* Finding the max value of an attribute in an array of objects */
+/* https://stackoverflow.com/questions/4020796/finding-the-max-value-of-an-attribute-in-an-array-of-objects */
+
+/* Get the element with the highest occurrence in an array */
+/* https://stackoverflow.com/questions/1053843/get-the-element-with-the-highest-occurrence-in-an-array */
+
+/* How to the get the sum of all the field with the same name in a nested array? */
+/* https://stackoverflow.com/questions/72488705/how-to-the-get-the-sum-of-all-the-field-with-the-same-name-in-a-nested-array */
+
 const listHelper = require('../utils/list_helper')
 
 test('dummy returns one', () => {
@@ -87,6 +97,46 @@ describe('total likes', () => {
     var result = listHelper.totalLikes(blogs)
     expect(result).toBe(36)
     //expect(listHelper.average([7, 5, 12, 10, 0, 2])).toBe(36)
+  })
+
+  test('of a favourite blog is calculated right', () => {
+    var result = listHelper.favoriteBlog(blogs)
+
+    const favouriteObject =
+    {
+      title:  "Canonical string reduction",
+      author:  "Edsger W. Dijkstra",
+      likes: 12
+    }
+
+    expect(result).toEqual(favouriteObject)
+  })
+
+
+  test('of a mostBlogs blog is calculated right', () => {
+    var result = listHelper.mostBlogs(blogs)
+
+    const mostBlogsObject =
+    {
+      author: "Robert C. Martin",
+      blogs: 3
+    }
+
+    expect(result).toEqual(mostBlogsObject)
+  })
+
+  /* The author who has the most likes */ 
+  /* Kirjoittaja jolla on eniten tykkayksia */
+  test('of a mostLikes blog is calculated right', () => {
+    var result = listHelper.mostLikes(blogs)
+
+    const mostLikesObject =
+    {
+      author: "Edsger W. Dijkstra",
+      likes: 17
+    }
+
+    expect(result).toEqual(mostLikesObject)
   })
 
 })
