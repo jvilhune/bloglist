@@ -99,6 +99,9 @@ describe('total likes', () => {
     //expect(listHelper.average([7, 5, 12, 10, 0, 2])).toBe(36)
   })
 
+
+  /* The blog who has the most likes */ 
+  /* Blogi jossa on eniten tykkayksia */
   test('of a favourite blog is calculated right', () => {
     var result = listHelper.favoriteBlog(blogs)
 
@@ -112,7 +115,8 @@ describe('total likes', () => {
     expect(result).toEqual(favouriteObject)
   })
 
-
+  /* Author who has the most blogs and how many blogs */
+  /* Author, jolla on eniten blogeja ja kuinka monta blogia */
   test('of a mostBlogs blog is calculated right', () => {
     var result = listHelper.mostBlogs(blogs)
 
