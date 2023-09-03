@@ -23,6 +23,8 @@ const dummy = (blogs) => {
   return retval
 }
 
+
+/* Laskee likes kenttien summan ja palauttaa summan */
 const totalLikes = (blogs) => {
   var retval
   if(blogs.length === 0) {
@@ -33,16 +35,18 @@ const totalLikes = (blogs) => {
   }
   else {
     retval = sumFromArray('likes', blogs)
-    console.log(retval)
+    //console.log(retval)
   }
   return retval
 }
 
 
+/* Laskee objectin tietyn nimisen kentan arvot yhteen ja palauttaa summan */
 var sumFromArray = (fieldName, array) => {
   let sum = 0;
   array.forEach(item => {
     sum += item[fieldName] ?? 0;
+    //console.log('item[fieldName]', item[fieldName])
   })
   return sum;
 }
@@ -51,7 +55,9 @@ var sumFromArray = (fieldName, array) => {
 /* Blogi jossa on eniten tykkayksia */
 const favoriteBlog = (blogs) => {
   var retval
-    
+
+  /* Molemmat seuraavat tekevat saman asian */ 
+
   var maxValue = Math.max(...blogs.map(o => o.likes), 0);
   var maxObject = blogs.reduce((prev, current) => (prev.likes > current.likes) ? prev : current)
 
@@ -70,7 +76,7 @@ const favoriteBlog = (blogs) => {
   console.log('maxObject', maxObject)
   console.log('xMax', xMax)
   console.log('maxXObject', maxXObject)
-  console.log('maxXObject', returnObject)
+  console.log('returnObject', returnObject)
   */
 
   retval = returnObject
