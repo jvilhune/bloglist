@@ -47,7 +47,8 @@ var sumFromArray = (fieldName, array) => {
   return sum;
 }
 
-
+/* The blog who has the most likes */ 
+/* Blogi jossa on eniten tykkayksia */
 const favoriteBlog = (blogs) => {
   var retval
     
@@ -77,6 +78,8 @@ const favoriteBlog = (blogs) => {
 }
 
 
+/* Author who has the most blogs and how many blogs */
+/* Author, jolla on eniten blogeja ja kuinka monta blogia */
 const mostBlogs = (blogs) => {
 
   var a = 0
