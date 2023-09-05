@@ -105,6 +105,10 @@ describe('total likes', () => {
   test('of a favourite blog is calculated right', () => {
     var result = listHelper.favoriteBlog(blogs)
 
+var keyNames = Object.keys(result);
+console.log(keyNames); // Outputs ["a","b","c"]
+
+
     const favouriteObject =
     {
       title:  "Canonical string reduction",

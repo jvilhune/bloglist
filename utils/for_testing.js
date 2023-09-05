@@ -1,4 +1,3 @@
-
 /* npm install --save-dev jest */
 /* Add into file package.json in to the place of scripts -> "test": "jest --verbose" */
 /* Add into the end of the file package.json -> "jest": { "testEnvironment": "node" } */
@@ -16,6 +15,39 @@
 
 /* Ajetaan tiedostossa average.test.js olevat testit komennolla npm test */
 /* Ajetaan tiedostossa reverse.test.js olevat testit komennolla npm test */
+
+/* npm install --save-dev cross-env */
+/* package.json */
+/*  "scripts": { */
+/*    "start": "cross-env NODE_ENV=production node index.js", */
+/*    "dev": "cross-env NODE_ENV=development nodemon index.js", */
+/*    "test": "cross-env NODE_ENV=test jest --verbose --runInBand" */
+
+/* npm install --save-dev supertest */
+
+/* Jos testeja suoriattaessa tulee seuraava ilmoitus : */
+/* Jest did not exit one secod after the test run has complete ... */
+
+/* Lisaa tiedosto teardown.js hakemistoon /tests/. Ja kirjoita tiedoston sisalloksi ... */
+/* module.exports = () => { */
+/*   process.exit(0) */
+/* }
+
+/* ... Ja lajenna tiedoston package.json Jestia koskeva maarittely */
+/*  "jest": { */
+/*    "testEnvironment": "node" */
+/*    "globalTeardown": "./tests/teardown.js" */
+
+/* Testin suorittaminen yksitellen : */
+/* npm test -- tests/blog_api.test.js */
+/* npm test -- tests/reverse.test.js */
+/* npm test -- tests/average.test.js */
+/* npm test -- -t 'blogs' */
+/* npm test -- -t 'a specific blog is within the returned notes' */
+
+/* npm install express-async-errors */
+/* Lisaa tiedostoon app.js */
+/* require('express-async-errors') */
 
 const reverse = (string) => {
   return string

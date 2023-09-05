@@ -47,6 +47,7 @@ var sumFromArray = (fieldName, array) => {
   array.forEach(item => {
     sum += item[fieldName] ?? 0;
     //console.log('item[fieldName]', item[fieldName])
+    //console.log('item[author]', item['author'])
   })
   return sum;
 }
