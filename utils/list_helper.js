@@ -108,8 +108,8 @@ const mostBlogs = (blogs) => {
     }
   });
 
-  console.log('max', max);
-  console.log('maxi', maxi);
+  //console.log('max', max);
+  //console.log('maxi', maxi);
 
   const returnObject =
   {
@@ -136,12 +136,12 @@ const mostLikes = (blogs) => {
   */
 
   var transformObject = transform(blogs)
-  console.log('transformObject:', transformObject)
+  //console.log('transformObject:', transformObject)
 
   /* And then find the author who has the most likes */
 
   var debugObject = favoriteBlog(transformObject)
-  console.log('debugObject:', debugObject)
+  //console.log('debugObject:', debugObject)
 
   const returnObject =
   {

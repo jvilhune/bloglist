@@ -1,65 +1,148 @@
 const blogsRouter = require('express').Router()
 const Blog = require('../models/blog')
+const User = require('../models/user')
+
+const middleware = require('../utils/middleware')
+
+const jwt = require('jsonwebtoken')
+
+/* 
+const getTokenFrom = request => {
+  const authorization = request.get('authorization')
+  if (authorization && authorization.startsWith('Bearer ')) {
+    return authorization.replace('Bearer ', '')
+  }
+  return null
+}
+*/
 
 blogsRouter.get('/', async (request, response) => {
-  const blogs = await Blog.find({})
+  const blogs = await Blog
+    .find({}).populate('user', { username: 1, name: 1 })
+
   response.json(blogs)
 })
 
-blogsRouter.post('/', async (request, response) => {
-
-  const str1 = 'title';
-  const str2 = 'url';
-  var found1 = ""
-  var found2 = ""
-
+blogsRouter.post('/', middleware.userExtractor, async (request, response) => {
   const body = request.body
 
-  var keyNames = Object.keys(body)
-  found1 = keyNames.find(v => str1.includes(v));
-  found2 = keyNames.find(v => str2.includes(v));
-
-  if(found1 != str1 || found2 != str2) {
-    response.status(400).end()
+  //const decodedToken = jwt.verify(getTokenFrom(request), process.env.SECRET)
+  /* 
+  const decodedToken = jwt.verify(request.token, process.env.SECRET)
+  if (!decodedToken.id) {
+    return response.status(401).json({ error: 'token invalid' })
   }
-  else
-  {
-    const blog = new Blog({
-      title: body.title,
-      author: body.author,
-      url: body.url,
-      likes: body.likes
-    })
 
-    if(blog.likes === null) {
+  const user = await User.findById(decodedToken.id)
+  */
+
+  const user = request.user
+
+  const blog = new Blog({
+    title: body.title,
+    author: body.author,
+    url: body.url,
+    likes: body.likes,
+    user: user._id
+  })
+
+  if(blog.likes === null) {
       blog.likes = 0
-    }
-    else {
-    }
-    const savedBlog = await blog.save()
-    response.status(201).json(savedBlog)
+  }
+
+  const savedBlog = await blog.save()
+  user.blogs = user.blogs.concat(savedBlog._id)
+  await user.save()
+
+  response.json(savedBlog)
+})
+
+blogsRouter.get('/:id', async (request, response) => {
+  const blog = await Blog.findById(request.params.id)
+  if (blog) {
+    response.json(blog)
+  } else {
+    response.status(404).end()
   }
 })
 
-blogsRouter.delete('/:id', async (request, response) => {
+blogsRouter.delete('/:id', middleware.userExtractor, async (request, response) => {
+
+  const body = request.body
+
+  //console.log('request.token', request.token)
+
+  //const decodedToken = jwt.verify(getTokenFrom(request), process.env.SECRET)
+
+  const decodedToken = jwt.verify(request.token, process.env.SECRET)
+  if (!decodedToken.id) {
+    return response.status(401).json({ error: 'token invalid' })
+  }
+
+  /*
+  const user = await User.findById(decodedToken.id)
+  */
+
+  /* Find user who owns token from the database */
+  const user = request.user
+
+  /* Find deleted blog from the database */
+  const blog = await Blog.findById(request.params.id)
+
+  /*  */
+
+
+  if(blog === null) {
+    return response.status(401).json({ error: 'Unknown blog' })
+  }
+
+  if(user === null) {
+    return response.status(401).json({ error: 'Unknown user' })
+  }
+
+  if (user.id != decodedToken.id) {
+    return response.status(401).json({ error: 'Unknown user. Id not match' })
+  }
+
+  if (blog.id != request.params.id) {
+    return response.status(401).json({ error: 'Unknown blog. Id not match' })
+  }
+
+  if (blog.user.toString() != user.id) {
+    return response.status(401).json({ error: 'Can not delete the blog. The owner of the blog is not the logged person' })
+  }
+
+  /*
+  console.log('user.name', user.name)
+  console.log('user.id', user.id)
+  console.log('decodedToken.id', decodedToken.id)
+  console.log('blog.id', blog.id)
+  console.log('request.params.id', request.params.id)
+  console.log('blog.user', blog.user.toString())
+  */
+
   await Blog.findByIdAndRemove(request.params.id)
   response.status(204).end()
 })
 
 
-blogsRouter.put('/:id', async (request, response) => {
+// This routine works too but not use token yet. Must be updated but later ...
+// Calling function in the blog_api.test.js test file must also be updated 
+blogsRouter.put('/:id', (request, response, next) => {
   const body = request.body
 
   const blog = {
-      title: body.title,
-      author: body.author,
-      url: body.url,
-      likes: body.likes
+    title: body.title,
+    author: body.author,
+    url: body.url,
+    likes: body.likes
   }
-  await Blog.findByIdAndUpdate(request.params.id, blog, { new: true })
-  const savedBlog = blog
-  //console.log('savedBlog', savedBlog)
-  response.status(201).json(savedBlog)
+
+  Blog.findByIdAndUpdate(request.params.id, blog, { new: true })
+    .then(updatedBlog => {
+      response.json(updatedBlog)
+    })
+    .catch(error => next(error))
 })
 
 module.exports = blogsRouter

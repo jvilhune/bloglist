@@ -1,0 +1,9 @@
+POST http://localhost:3001/api/blogs  
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBhc2l0YSIsImlkIjoiNjRmZDUzMTkyOWQxNzU3MzdjMzZlM2JkIiwiaWF0IjoxNjk0MzI3Mjg3fQ.0vsMrOuK4JiMtnsIV3p3y3EwlC13xebXnWh6TQf0mOU
+
+{
+"title": "Astral Dream Records", "author": "Lucio Corsini", "url": "http://www.astraldream.com", "likes": 100
+}
+
+

@@ -39,15 +39,33 @@
 /*    "globalTeardown": "./tests/teardown.js" */
 
 /* Testin suorittaminen yksitellen : */
-/* npm test -- tests/blog_api.test.js */
+/* npm test -- tests/note_api.test.js */
 /* npm test -- tests/reverse.test.js */
 /* npm test -- tests/average.test.js */
-/* npm test -- -t 'blogs' */
-/* npm test -- -t 'a specific blog is within the returned notes' */
+/* npm test -- -t 'notes' */
+/* npm test -- -t 'a specific note is within the returned notes' */
+/* npm test -- -t "a specific note is within the returned notes" */
+
+/* npm test -- -t "when there is initially one user at db" */
+/* npm test -- -t "creation succeeds with a fresh username" */
+/* npm test -- -t "creation fails with proper statuscode and message if username already taken" */
+/* npm test -- -t "addition of a new note" */
+/* npm test -- -t "succeeds with valid data" */
+/* npm test -- -t "a valid user can be added " */
 
 /* npm install express-async-errors */
 /* Lisaa tiedostoon app.js */
 /* require('express-async-errors') */
+
+/* npm install bcrypt */
+
+/* npm install mongoose-unique-validator */
+/* Jos tuli virheita */
+/* -> */
+/* npm install mongoose@6 */
+
+/* npm install jsonwebtoken */
+
 
 const reverse = (string) => {
   return string
