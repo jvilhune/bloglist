@@ -14,7 +14,7 @@ beforeEach(async () => {
   /* For some reason too many of these commands in a row causes errors. */
   /* Maybe the errors caused by database buffering? */
   /* That's why we deleted all blogs here in the beginning before running tests and */
-  /* all blogs in the end of the tests */
+  /* all users in the end of the tests */
   /* Make sure the database is empty before the test */
   /* If there are blogs and/or users in the database it may cause errors */
   /* when you run the tests for the first time. */
