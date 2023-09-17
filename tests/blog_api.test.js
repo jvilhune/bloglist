@@ -8,8 +8,6 @@ const Blog = require('../models/blog')
 const User = require('../models/user')
 const helper = require('./test_helper')
 
-
-
 beforeEach(async () => {
   /* For some reason too many of these commands in a row causes errors. */
   /* Maybe the errors caused by database buffering? */
@@ -57,6 +55,66 @@ test('Two valid users succesfully added ', async () => {
     .expect(201)
     .expect('Content-Type', /application\/json/)
 })
+
+/*
+test('login first, then create two blogs and read back, and finally delete the same blogs ', async () => {
+
+  var a = 0
+  var comid = 1
+
+  const keyNames = [ 'title', 'author', 'url', 'likes', 'id' ]
+
+  const newLogin = {
+    username: 'heikkisi',
+    password: 'heikkisi'
+  }
+
+  const response = await api
+    .post('/api/login')
+    .send(newLogin)
+    .expect(200)
+    .expect('Content-Type', /application\/json/)
+
+  const token = response.body.token
+
+  const newBlog = {
+      title: "Type wars",
+      author: "Robert C. Martin",
+      url: "http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html",
+      likes: 2,
+  }
+
+  const response2 = await api
+    .post('/api/blogs')
+    .set({ Authorization: `Bearer ${token}` })
+    .send(newBlog)
+    .expect(200)
+    .expect('Content-Type', /application\/json/)
+
+  const newBlog2 = {
+    title: "React patterns",
+    author: "Michael Chan",
+    url: "https://reactpatterns.com/",
+    likes: 7,
+  }
+
+  const response3 = await api
+    .post('/api/blogs')
+    .set({ Authorization: `Bearer ${token}` })
+    .send(newBlog2)
+    .expect(200)
+    .expect('Content-Type', /application\/json/)
+
+
+  const response4 = await api.get('/api/blogs')
+  expect(response4.body).toHaveLength(helper.initialBlogs.length-2+2)
+
+  var blogsAtEnd = [{}]
+  blogsAtEnd = await helper.blogsInDb()
+
+  expect(blogsAtEnd).toHaveLength(2)
+})
+*/
 
 
 test('all users are returned', async () => {
@@ -161,14 +219,14 @@ test('login first, then create two blogs and read back, and finally delete the s
   blogsAtEnd = await helper.blogsInDb()
   expect(blogsAtEnd).toHaveLength(0)
 
-  /*
-  for (a=0;a<blogsAtEnd.length;a++) {
-  await api
-    .delete(`/api/blogs/${blogsAtEnd[a].id}`)
-    .set({ Authorization: `Bearer ${token}` })
-    .expect(204)
-  }
-  */
+
+  //for (a=0;a<blogsAtEnd.length;a++) {
+  //await api
+    //.delete(`/api/blogs/${blogsAtEnd[a].id}`)
+    //.set({ Authorization: `Bearer ${token}` })
+    //.expect(204)
+  //}
+
 })
 
 
@@ -370,7 +428,6 @@ test('all users are succesfully deleted', async () => {
   usersAtEnd = await helper.usersInDb()
   expect(usersAtEnd.length).toBe(0)
 })
-
 
 /*
 // This routine works too but not use token yet. Must be updated but later ...
